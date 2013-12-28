@@ -1,7 +1,3 @@
-require 'bibtex'
-require 'citeproc'
+require 'jekyll/scholar'
 
-require File.dirname(__FILE__) + '/JSCite'
-require File.dirname(__FILE__) + '/JSCRef'
-module JSC
-end
+require File.dirname(__FILE__) + '/math_jax'

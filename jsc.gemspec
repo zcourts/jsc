@@ -12,8 +12,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.6}
   s.required_rubygems_version = Gem::Requirement.new(">= 1.3.6") if s.respond_to? :required_rubygems_version=
 
-  s.add_runtime_dependency('citeproc-ruby', '~> 0.0.6')
-  s.add_development_dependency('bibtex-ruby', '~> 3.0.0')
+  s.add_development_dependency('jekyll-scholar', '~> 1.2.3')
   s.add_development_dependency('liquid', '~> 2.5.2')
   s.add_development_dependency('rdoc', '> 0')
 

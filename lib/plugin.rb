@@ -1,69 +1,44 @@
 module JSC
   module Plugin
-    attr_reader :key, :site, :ctx
+    attr_reader :site, :ctx
 
     def config
-      @config                                  ||= Hash.new
-      @config['bibtex']                        ||= Hash.new
-      #apa, mla etc, any valid CSL style
-      @config['bibtex']['style']               ||= 'apa'
-      #language to use when formatting localized terms e.g. 'Eds.' for editors in en
-      @config['bibtex']['locale']              ||= 'en'
-      @config['bibtex']['format']              ||= 'html'
-      #prefix used when generating links to references
-      @config['bibtex']['prefix']              ||= 'ref'
-      #directory where bib files are located
-      @config['bibtex']['dir']                 ||= 'bibtex'
-      #list of bib files to use to lookup citations
-      @config['bibtex']['file']                ||= 'references.bib'
-      @config['bibtex']['include_unused_refs'] ||= false
-      @config['bibtex']['missing_ref']         ||= 'missing-ref(%s)'
-      @config['bibtex']['bib_template']        ||= '%{reference}'
-      @config['bibtex']['query']               ||= '@*'
+      @config                              ||= Hash.new
+      @config['match_jax']                 ||= Hash.new
+      @config['match_jax']['config']       ||= 'default.js'
+      @config['match_jax']['local_config'] ||= ''
+      @config['match_jax']['url']          ||= ''
       @config
-    end
-
-    def missing_ref(key)
-      sprintf config['bibtex']['missing_ref'], key
-    end
-
-    def prefix
-      config['bibtex']['prefix']
-    end
-
-    def entries
-      bib[config['bibtex']['query']]
-    end
-
-    def bib
-      ctx['jsc']['bib'] ||= BibTeX.open(File.join(config['bibtex']['dir'], config['bibtex']['file']))
-      ctx['jsc']['bib']
-    end
-
-    def link_to(href, content, attributes = {})
-      content_tag :a, content || href, attributes.merge(:href => href)
     end
 
     def set_ctx(ctx)
       @ctx, @site, = ctx, ctx.registers[:site]
       @config      = @site.config['jsc'] || {}
+      ctx['jsc']   ||= {}
     end
 
-    def content_tag(name, c_or_a, attributes = {})
-      if c_or_a.is_a?(Hash)
-        content, attributes = nil, c_or_a
-      else
-        content = c_or_a
-      end
-
-      attributes = attributes.map { |k, v| %Q(#{k}="#{v}") }
-
-      if content.nil?
-        "<#{[name, attributes].flatten.compact.join(' ')}/>"
-      else
-        "<#{[name, attributes].flatten.compact.join(' ')}>#{content}</#{name}>"
-      end
+    def mj_config
+      config['match_jax']['config']
     end
 
+    def mj_local?
+      !config['match_jax']['local_config'].empty?
+    end
+
+    def mj_local
+      mj_local? ? ',' + config['match_jax']['config'] : ''
+    end
+
+    def mj_url
+      config['match_jax']['url'].empty? ? 'http://cdn.mathjax.org/mathjax/latest/MathJax.js' : config['match_jax']['url']
+    end
+
+    def math_jax
+      r                         = !ctx['jsc']['mj_injected'] ?
+          "<script type=\"text/javascript\" src=\"#{mj_url}?config=#{mj_config}#{mj_local}\"></script>" : ''
+      ctx['jsc']['mj_injected'] ||= true
+      r
+      #todo need to modify   loadComplete     http://docs.mathjax.org/en/latest/configuration.html#local-config-files
+    end
   end
 end
