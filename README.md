@@ -10,5 +10,8 @@ A plugin which extends markdown to include features akin to Latex's that make ma
 
 ### Todo
 
-Add pandoc support so that Jekyll site can be completely written in LateX or another format and output to HTML and PDF.
+* Add [pandoc](http://johnmacfarlane.net/pandoc/) support so that Jekyll site can be completely written in LateX or another format and output to HTML and PDF.
 See [pandoc-multiple-formats](https://github.com/fauno/jekyll-pandoc-multiple-formats) or [pandoc-plugin](https://github.com/dsanson/jekyll-pandoc-plugin)
+
+* Git hooks to automatically build the jekyll site see [Git global hooks](http://stackoverflow.com/a/8842663/400048) and  [Githooks](http://githooks.com/)
+
