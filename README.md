@@ -14,6 +14,25 @@ On the command line run
    gem install jekyll-scientific
 ```
 
+### Git branch structure
+
+To publish your site with JSC, a certain structure is needed.
+You must have two branches, one __must__ be called `gh-pages` and the other can be called anything, "master" for example.
+In master is where you will put all your development content. From the master branch create an orphan branch with:
+
+```bash
+git checkout --orphan gh-pages
+```
+Now delete all the files in the directory and push the new gh-pages branch to Github.
+Checkout the master branch,edit your content as you see fit and when your finished, commit all your changes in master and push them to Github.
+Once your master branch is pushed to Github, run the jsc command from the master branch.
+
+```bash
+jsc publish
+```
+This will build your Jekyll site using all your local plugins and then push the site to the gh-pages branch on Github.
+Give it up to 10 minutes and your site will be accessible.
+
 That's it, plugin specific config options are included below.
 
 ## What it supports Support

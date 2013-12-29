@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+spec       = Gem::Specification.find_by_name('jekyll-scientific')
+shell_path = File.join(spec.gem_dir, 'bin', 'jsc_shell.sh')
+exec("sh #{shell_path} " + ARGV.join( ' ' ))
