@@ -16,7 +16,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency('liquid', '~> 2.5.2')
   s.add_development_dependency('rdoc', '> 0')
 
-  s.files         = `git ls-files`.split("\n")
+  #s.files         = `git ls-files`.split("\n")
+  s.files = Dir["README.md","Gemfile","Rakefile", "lib/**/*", "bin/**/*"]
+
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_paths = ["lib"]
   s.executables << 'jsc'
